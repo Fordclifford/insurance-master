@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $insurance['due_date'] = date_format($dt, "d-m-Y H:i:s");
      $insurance['created_at'] = date('Y-m-d H:i:s');
-      $insurance['motorbike_details_id'] = $data_to_store['client_id'];
+      $insurance['motorbike_details_id'] = $data_to_store['bike_id'];
        $insurance['period'] = $data_to_store['period'];
         $insurance['policy_number'] = $data_to_store['policy_number'];
         $insurance['renewal']="1";
@@ -34,11 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = getUipDbInstance();
 
     $last_id = $db->insert('client_insurance_details', $insurance);
+    $db->disconnect();
    //  $last_id2 = $db->insert('`client motorbike details`', $motorbike);
 
     if ($last_id  ) {
         $_SESSION['success'] = "Insurance renewed successfully!";
-        header('location: insurance.php');
+        header('location: renewals.php');
         exit();
     } else {
         echo 'insert failed: ' . $db->getLastError();

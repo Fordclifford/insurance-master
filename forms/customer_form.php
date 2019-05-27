@@ -3,8 +3,8 @@
     <div class="form-group">
         <label>Please Select Client </label>
 
-        <select  name="client_id" class="form-control selectpicker" required="required">
-            <option value=" " >Please select Client</option>
+        <select   id="client_id" name="client_id" class="form-control selectpicker" required="required" >
+            <option value="" >Please select Client</option>
             <?php
             require_once './config/config.php';
             echo $sql = "select c.id,c.display_name from m_client c where c.status_enum='300' and c.office_id='50' and c.id not in (SELECT client_id from `client motorbike details`) ";
@@ -39,7 +39,8 @@
             }
             ?>
         </select>
-    </div>  
+    </div>     
+    
 
     <div class="form-group">
         <label for="number_plate">Number Plate *</label>
@@ -91,14 +92,15 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    $(function () {
-        $("#commence_date").datepicker(
-                );
+    $(function (){
+        $("#commence_date").datepicker();
 
     });
     $(function () {
         $("#duedate").datepicker();
     });
+    
 
+}
 
 </script>

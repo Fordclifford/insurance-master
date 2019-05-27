@@ -20,7 +20,7 @@ if (!$page) {
 
 // If filter types are not selected we show latest created data first
 if (!$filter_col) {
-    $filter_col = "d.updated_at";
+    $filter_col = "d.created_at";
 }
 if (!$order_by) {
     $order_by = "Desc";
@@ -29,14 +29,14 @@ if (!$order_by) {
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getUipDbInstance();
  //$db->join("m_client c", "c.id = d.client_id", "LEFT");
- $db->join("`client motorbike details` d", "c.id = d.client_id", "LEFT");
-  $db->join("`m_loan` l", "c.id = l.client_id", "LEFT");
-   $db->join("`m_product_loan` p", "p.id = l.product_id", "LEFT");
+ $db->join("`client_bike_details` d", "c.id = d.client_id", "inner");
+// $db->join("`m_loan` l", "c.id = l.client_id", "LEFT");
+  // $db->join("`m_product_loan` p", "p.id = l.product_id", "LEFT");
             $db->where("c.status_enum", 300);
               $db->where("c.office_id", 50);
            //SELECT c.display_name,c.mobile_no,c.account_no ,d.Model,d.number_plate,d.`Engine`,d.COLOUR,d.marketing_agent FROM m_client c INNER JOIN `client motorbike details` d ON c.id=d.client_id
             //$db->where("d.print_status", "0");
-   $select = array('l.id','c.display_name','p.name','c.mobile_no','c.account_no',"d.`number_plate`","d.Engine","d.Model","d.Others","d.client_id");
+   $select = array('d.id','c.display_name','c.mobile_no','c.account_no',"d.`number_plate`","d.Engine","d.Model","d.Others","d.client_id");
 
 //Start building query according to input parameters.
 // If search string
@@ -142,8 +142,7 @@ include_once 'includes/header.php';
                 <th>Mobile</th>
                 <th>Account No</th>
                 <th>Number Plate</th>
-                <th>Insurance</th>
-                <th>Engine</th>
+                               <th>Engine</th>
                 <th>Model</th>
                 <th>Others</th>
                 <th>Actions</th>
@@ -158,12 +157,12 @@ include_once 'includes/header.php';
 	                <td><?php echo htmlspecialchars($row['mobile_no']) ?></td>
 	                <td><?php echo htmlspecialchars($row['account_no']) ?> </td>
                         <td><?php echo htmlspecialchars($row['number_plate']); ?></td>
-                         <td><?php echo htmlspecialchars($row['name']); ?></td>
+                      
 	                <td><?php echo htmlspecialchars($row['Engine']) ?></td>
 	                <td><?php echo htmlspecialchars($row['Model']) ?> </td>
                         <td><?php echo htmlspecialchars($row['Others']) ?></td>
 	                <<td>
-                            		<a href="edit_customer.php?client_id=<?php echo $row['client_id'] ?>&operation=edit" class="btn btn-primary" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span>
+                            		<a href="edit_customer.php?client_id=<?php echo $row['id'] ?>&operation=edit" class="btn btn-primary" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span>
 
 	</td>
 		
@@ -205,6 +204,7 @@ include_once 'includes/header.php';
     <div class="text-center">
 
         <?php
+        $db->disconnect();
         if (!empty($_GET)) {
             //we must unset $_GET[page] if previously built by http_build_query function
             unset($_GET['page']);

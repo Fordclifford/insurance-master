@@ -29,8 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     
     $data_to_update['updated_at'] = date('Y-m-d H:i:s');
     $db = getUipDbInstance();
-    $db->where('client_id',$customer_id);
-    $stat = $db->update('`client motorbike details`', $data_to_update);
+    $db->where('id',$customer_id);
+    $stat = $db->update('`client_bike_details`', $data_to_update);
+    $db->disconnect();
 
     if($stat)
     {
@@ -46,9 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //If edit variable is set, we are performing the update operation.
 if($edit)
 {
-    $db->where('client_id', $customer_id);
+    $db->where('id', $customer_id);
     //Get data to pre-populate the form.
-    $customer = $db->getOne("`client motorbike details`");
+    $customer = $db->getOne("`client_bike_details`");
 }
 ?>
 

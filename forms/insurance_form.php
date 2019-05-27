@@ -3,28 +3,26 @@
     <div class="form-group">
         <label>Please Select Client </label>
 
-        <select  name="motorbike_details_id" class="form-control selectpicker" required="required">
+        <select  name="motorbike_details_id" id="motorbike_details_id" class="form-control selectpicker" required="required" onchange="get_bike();">
             <option value=" " >Please select Client</option>
             <?php
             require_once './config/config.php';
-            echo $sql = "select c.id,c.display_name from m_client c inner join `client motorbike details` m on c.id=m.client_id where c.status_enum='300' and c.office_id='50' ";
+            echo $sql = "select distinct(c.id),c.display_name from m_client c left join `client_bike_details` m on c.id=m.client_id where c.status_enum='300' and c.office_id='50' ";
             $result = mysqli_query(getDbConnection(), $sql);
-
-            $db = getUipDbInstance();
-            //  $db->join("client_insurance_details l", "c.id = l.motorbike_details_id", "LEFT");
-            //$db->where("l.product_id", 44);
-            // $db->where ("(l.product_id = ? or l.product_id = ?)", Array(44,45));
-            $db->where("c.status_enum", 300);
-            // $db->where("c.id", "NOrT EXISTS (SELECT motorbike_details_id from client_insurance_details)");
-            //$db->where("l.loan_status_id", 300);
-            $db->where("c.office_id", 50);
-            // $db->orderBy("l.id", "desc");
-            //$db->orWhere("l.product_id", 45);
-            $select = array('c.id', 'c.display_name', 'c.mobile_no', 'c.account_no');
-            $customers = $db->get("m_client c", null, $select);
-
+if ($edit){
+    $client = $customer['motorbike_details_id'];
+             echo $sql = "select distinct(c.id),c.display_name from client_insurance_details d left join `client_bike_details` e on d.motorbike_details_id = e.id left join m_client c on c.id = e.client_id  where e.id='$client' ";
+            $result1 = mysqli_query(getDbConnection(), $sql);
+                      
+            $clients=Array();
+             foreach ($result1 as $row) {
+                 array_push($clients, $row);
+                 
+             }
+             print_r($clients);
+}
             foreach ($result as $opt) {
-                if ($edit && $opt['id'] == $customer['motorbike_details_id']) {
+                if ($edit && $opt['id'] == $clients[0]['id']) {
                     $sel = "selected";
                 } else {
                     $sel = "";
@@ -34,6 +32,26 @@
             ?>
         </select>
     </div>  
+    
+      <div class="form-group">
+        <label>Please Select Bike </label>
+
+        <select id="bike_id" name="bike_id" class="form-control selectpicker" required="required" >     
+                    <?php
+                   
+if ($edit){    
+      require_once './config/config.php';
+    $client = $customer['motorbike_details_id'];
+              $sql = "select e.id,e.Model,e.number_plate from `client_bike_details` e where id='$client' ";
+            $result = mysqli_query(getDbConnection(), $sql);
+                      
+            foreach ($result as $opt) {
+               echo '<option value="' . $opt['id'] . '"' . $sel . '>' . $opt['Model']."-".$opt['number_plate'] . '</option>';
+            }
+}
+            ?>
+            </select>
+    </div> 
 
 
     <div class="form-group">
@@ -73,6 +91,18 @@
     $(function () {
         $("#duedate").datepicker();
     });
-
-
+    
+function get_bike() { // Call to ajax function
+    var client = $('#motorbike_details_id').val();
+    var dataString = "client_id="+client;
+    $.ajax({
+        type: "POST",
+        url: "./includes/getbikes.php", // Name of the php files
+        data: dataString,
+        success: function(html)
+        {
+            $("#bike_id").html(html);
+        }
+    });
+}
 </script>

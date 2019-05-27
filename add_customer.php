@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = getUipDbInstance();
 
-    $last_id = $db->insert('`client motorbike details`', $motorbike);
+    $last_id = $db->insert('`client_bike_details`', $motorbike);
+    $db->disconnect();
     // $last_id2 = $db->insert('`client motorbike details`', $motorbike);
 
     if ($last_id ) {

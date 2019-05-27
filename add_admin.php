@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     	$_SESSION['success'] = "Admin user added successfully!";
     	header('location: admin_users.php');
+        $db->disconnect();
     	exit();
     }  
     

@@ -28,13 +28,12 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getUipDbInstance();
- $db->join("m_client c", "c.id = d.motorbike_details_id", "LEFT");
- $db->join("`client motorbike details` e", "c.id = e.client_id", "LEFT");
+ $db->join("`client_bike_details` e", "d.motorbike_details_id = e.id", "LEFT");
+  $db->join("m_client c", "c.id = e.client_id", "LEFT");
             $db->where("c.status_enum", 300);
               $db->where("c.office_id", 50);
            
-            $db->where("d.print_status", "0");
-            //$db->where("d.renewal", "0");
+           $db->where("d.print_status", "0");
    $select = array('d.id', 'c.display_name','d.policy_number','d.commence_date','d.period', 'd.due_date','c.mobile_no','c.account_no',"e.`number_plate`","e.Engine","e.Model","e.Others","e.client_id");
 
 //Start building query according to input parameters.
@@ -194,6 +193,7 @@ include_once 'includes/header.php';
     <div class="text-center">
 
         <?php
+        $db->disconnect();
         if (!empty($_GET)) {
             //we must unset $_GET[page] if previously built by http_build_query function
             unset($_GET['page']);

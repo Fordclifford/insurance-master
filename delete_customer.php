@@ -17,7 +17,7 @@ if ($del_id && $_SERVER['REQUEST_METHOD'] == 'POST')
     $db = getUipDbInstance();
     $db->where('id', $customer_id);
     $status = $db->delete('client_motorbike_details');
-    
+    $db->disconnect();
     if ($status) 
     {
         $_SESSION['info'] = "Client Motorbike details deleted successfully!";

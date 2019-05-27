@@ -3,11 +3,11 @@
     <div class="form-group">
         <label>Please Select Client </label>
 
-        <select  name="client_id" class="form-control selectpicker" required="required">
+        <select  name="client_id" id="client_id" class="form-control selectpicker" required="required" onchange="get_bike()">
             <option value=" " >Please select Client</option>
             <?php
             require_once './config/config.php';
-            echo $sql = "select distinct(c.id),c.display_name from m_client c inner join `client motorbike details`  m on c.id=m.client_id inner join client_insurance_details d on d.motorbike_details_id=c.id where c.status_enum='300' and c.office_id='50' and d.print_status=1 ";
+            echo $sql = "select distinct(c.id),c.display_name from m_client c inner join `client_bike_details`  m on c.id=m.client_id inner join client_insurance_details d on d.motorbike_details_id=m.id where c.status_enum='300' and c.office_id='50' and d.print_status='1' ";
             $result = mysqli_query(getDbConnection(), $sql);
 
             $db = getUipDbInstance();
@@ -34,7 +34,11 @@
             ?>
         </select>
     </div>  
+    <div class="form-group">
+        <label>Please Select Bike </label>
 
+        <select id="bike_id" name="bike_id" class="form-control selectpicker" required="required" >     </select>
+    </div>
 
     <div class="form-group">
         <label for="commence_date">Commencement Date *</label>
@@ -73,6 +77,18 @@
     $(function () {
         $("#duedate").datepicker();
     });
-
+function get_bike() { // Call to ajax function
+    var client = $('#client_id').val();
+    var dataString = "client_id="+client;
+    $.ajax({
+        type: "POST",
+        url: "./includes/getbikes.php", // Name of the php files
+        data: dataString,
+        success: function(html)
+        {
+            $("#bike_id").html(html);
+        }
+    });
+}
 
 </script>

@@ -19,6 +19,7 @@ if (isset($_COOKIE['series_id']) && isset($_COOKIE['remember_token'])) {
 	//Get user By serirs ID : 
 	$db->where("series_id", $series_id);
 	$row = $db->get('admin_accounts');
+        $db->disconnect();
 
 
 	if ($db->count >= 1) {

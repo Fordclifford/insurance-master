@@ -10,6 +10,7 @@ $db = getUipDbInstance();
 //Get Dashboard information
 
 $numCustomers = $db->getValue ("`client motorbike details`", "count(*)");
+$db->disconnect();
 
 include_once('includes/header.php');
 ?>

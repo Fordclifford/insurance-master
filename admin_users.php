@@ -171,6 +171,7 @@ include_once 'includes/header.php';
     <div class="text-center">
 
         <?php
+        $db->disconnect();
         if (!empty($_GET)) {
             //we must unset $_GET[page] if built by http_build_query function
             unset($_GET['page']);

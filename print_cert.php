@@ -15,8 +15,9 @@ $operation = filter_input(INPUT_GET, 'operation', FILTER_SANITIZE_STRING);
 ($operation == 'print') ? $print = true : $print = false;
  
      $db = getUipDbInstance();
-            $db->join("m_client c", "c.id = d.motorbike_details_id", "INNER");
-             $db->join("`client motorbike details` e", "e.client_id = d.motorbike_details_id", "INNER");
+     $db->join("`client_bike_details` e", "e.id = d.motorbike_details_id", "INNER");
+            $db->join("m_client c", "c.id = e.client_id", "INNER");
+             
             $db->where("d.id", $client_id);
              //$db->where("d.print_status", 1);
              $select = array('c.id','d.id as d_id', 'c.display_name','d.policy_number','c.firstname','c.lastname','d.commence_date','d.due_date','c.mobile_no','e.number_plate','c.account_no','e.Engine','e.Model','e.Others');
@@ -187,6 +188,7 @@ $data = Array (
 );
 $db->where ('id', $id);
 $db->update ('client_insurance_details', $data);
+$db->disconnect();
 
 
 //============================================================+

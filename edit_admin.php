@@ -63,6 +63,7 @@ $db = getUipDbInstance();
 $db->where('id', $admin_user_id);
 
 $admin_account = $db->getOne("admin_accounts");
+$db->disconnect();
 
 // Set values to $row
 

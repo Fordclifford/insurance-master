@@ -15,16 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
  $db = getUipDbInstance();
   
-    //$customer_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
-
-    //Get input data
     $data_to_update = filter_input_array(INPUT_POST);
     $data_to_update['updated_at'] = date('Y-m-d H:i:s');
-
-    $db->where('id','$customer_id');
-    $stat = $db->update('`client_insurance_details`', $data_to_update);
-    $db->disconnect();
+     $dt1 = new DateTime($data_to_update['commence_date']);
+      $dt1->format('Y-m-d H:i:s');
+      
+         $dt2 = new DateTime($data_to_update['due_date']);
+      $dt2->format('Y-m-d H:i:s');
+      
+    $data_to_update['commence_date'] = date_format($dt1, "d-m-Y H:i:s");
+ $data_to_update['due_date'] = date_format($dt2, "d-m-Y H:i:s");
    // print_r($data_to_update);echo $stat; exit();
+
+    $db->where('id',$customer_id);
+    $stat = $db->update('client_insurance_details', $data_to_update);
+    $db->disconnect();
+
     if($stat)
     {
         $_SESSION['success'] = "Insurance Details updated successfully!";
@@ -38,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 //If edit variable is set, we are performing the update operation.
 if($edit)
-{    $db = getUipDbInstance();
+{ 
+
+  $db = getUipDbInstance();
     $db->where('id', $customer_id);
     //Get data to pre-populate the form.
     $customer = $db->getOne("client_insurance_details");

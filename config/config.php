@@ -28,11 +28,11 @@ require_once BASE_PATH . '/helpers/helpers.php';
 //	return new MysqliDb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 //}
 function getUipDbInstance() {
-	return new MysqliDb("localhost:3306", "root", "mysql", "mifostenant-default");
+	return new MysqliDb("192.168.1.243:3306", "root", "mysql", "mifostenant-default");
 }
 
 function getDbConnection() {
-    $DB_HOST = 'localhost:3306';
+    $DB_HOST = '192.168.1.243:3306';
     $DB_HOST_NAME = 'root';
     $DB_HOST_PASS = 'mysql';
     $DB_NAME = 'mifostenant-default';

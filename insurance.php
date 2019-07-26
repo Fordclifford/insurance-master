@@ -29,20 +29,24 @@ if (!$order_by) {
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getUipDbInstance();
 
- $db->join("`client_bike_details` e", "d.motorbike_details_id = e.id", "LEFT");
+ $db->join("`client_bike_details` e", "d.bike_id = e.id", "LEFT");
   $db->join("m_client c", "c.id = e.client_id", "LEFT");
             $db->where("c.status_enum", 300);
               $db->where("c.office_id", 50);
-           
+            $db->where("d.cancelled", '0');
           //  $db->where("d.print_status", "0");
-   $select = array('d.id', 'c.display_name','d.policy_number','d.commence_date','d.period', 'd.due_date','c.mobile_no','c.account_no',"e.`number_plate`","e.Engine","e.Model","e.Others","e.client_id");
+   $select = array('d.id', 'c.display_name','left(d.policy_number,20) AS policy_number','d.cover_type','d.cert_no','d.commence_date','d.period', 'd.due_date','c.mobile_no','c.account_no',"e.`number_plate`","e.Engine","e.Model","e.Others","e.client_id");
 
 //Start building query according to input parameters.
 // If search string
 if ($search_string) 
 {
-    $db->where('c.display_name', '%' . $search_string . '%', 'like');
+    $db->where('c.firstname', '%' . $search_string . '%', 'like');
     $db->orwhere('c.mobile_no', '%' . $search_string . '%', 'like');
+        $db->where('d.policy_number', '%' . $search_string . '%', 'like');
+    $db->orwhere('d.cert_no', '%' . $search_string . '%', 'like');
+        $db->where('c.account_no', '%' . $search_string . '%', 'like');
+    $db->orwhere('e.number_plate', '%' . $search_string . '%', 'like');
 }
 
 //If order by option selected
@@ -133,28 +137,33 @@ include_once 'includes/header.php';
                 <th>Commencement Date</th>
                 <th>Expiry Date</th>
                 <th>Policy Number</th>
+                 <th>Certificate Number</th>
                 <th>Number Plate</th>
                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+        
             <?php foreach ($customers as $row) : ?>
+             
                 <tr>
+                 
 	                <td><?php echo $row['id'] ?></td>
                         
 	                <td><?php echo htmlspecialchars($row['display_name']); ?></td>
 	                <td><?php echo htmlspecialchars($row['mobile_no']) ?></td>
 	                <td><?php echo htmlspecialchars($row['commence_date']) ?> </td>
-                        <td><?php echo htmlspecialchars($row['due_date']) ?> </td>
-                        <td><?php echo htmlspecialchars($row['policy_number']) ?> </td>
+                        <td><?php echo htmlspecialchars($row['due_date']) ?> </td>                     
+                       <td><?php echo htmlspecialchars($row['policy_number']."-".$row['cover_type']) ?> </td>
+                        <td><?php echo htmlspecialchars($row['cert_no']) ?> </td>
                         <td><?php echo htmlspecialchars($row['number_plate']); ?></td>
 	               
 	                <td>
                             	<a href="print_cert.php?id=<?php echo $row['id'] ?>&operation=print" class="btn btn-primary" style="margin-right: 8px;"><span class="glyphicon glyphicon-print"></span>
 					<a href="edit_insurance.php?id=<?php echo $row['id'] ?>&operation=edit" class="btn btn-primary" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span>
 
-					
-	</td>
+			<a href=""  class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['id'] ?>" style="margin-right: 8px;"><span class="fa fa-close"></span></td>
+				</td>
 		
 </tr>
                                 
@@ -173,7 +182,7 @@ include_once 'includes/header.php';
 						      
 						        		<input type="hidden" name="del_id" id = "del_id" value="<?php echo $row['id'] ?>">
 						        	
-						          <p>Are you sure you want to delete this client?</p>
+						          <p>Are you sure you want to cancel this policy?</p>
 						        </div>
 						        <div class="modal-footer">
 						        	<button type="submit" class="btn btn-default pull-left">Yes</button>
@@ -208,7 +217,7 @@ include_once 'includes/header.php';
             echo '<ul class="pagination text-center">';
             for ($i = 1; $i <= $total_pages; $i++) {
                 ($page == $i) ? $li_class = ' class="active"' : $li_class = "";
-                echo '<li' . $li_class . '><a href="printed_certs.php' . $http_query . '&page=' . $i . '">' . $i . '</a></li>';
+                echo '<li' . $li_class . '><a href="insurance.php' . $http_query . '&page=' . $i . '">' . $i . '</a></li>';
             }
             echo '</ul></div>';
         }

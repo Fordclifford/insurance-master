@@ -8,20 +8,22 @@ if ($del_id && $_SERVER['REQUEST_METHOD'] == 'POST')
 
 	if($_SESSION['admin_type']!='super'){
 		$_SESSION['failure'] = "You don't have permission to perform this action";
-    	header('location: customers.php');
+    	header('location: insurance.php');
         exit;
 
 	}
     $customer_id = $del_id;
-
+$data_to_update=Array();
     $db = getUipDbInstance();
-    $db->where('id', $customer_id);
-    $status = $db->delete('client_motorbike_details');
+   $data_to_update['cancelled'] = '1';
+     $db->where('id',$customer_id);
+    $stat = $db->update('client_insurance_details', $data_to_update);
     $db->disconnect();
-    if ($status) 
+
+    if ($stat) 
     {
-        $_SESSION['info'] = "Client Motorbike details deleted successfully!";
-        header('location: customers.php');
+        $_SESSION['info'] = "Policy cancelled successfully!";
+        header('location: cancelled.php');
         exit;
     }
     else

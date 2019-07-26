@@ -15,12 +15,12 @@ $operation = filter_input(INPUT_GET, 'operation', FILTER_SANITIZE_STRING);
 ($operation == 'print') ? $print = true : $print = false;
  
      $db = getUipDbInstance();
-     $db->join("`client_bike_details` e", "e.id = d.motorbike_details_id", "INNER");
+     $db->join("`client_bike_details` e", "e.id = d.bike_id", "INNER");
             $db->join("m_client c", "c.id = e.client_id", "INNER");
              
             $db->where("d.id", $client_id);
              //$db->where("d.print_status", 1);
-             $select = array('c.id','d.id as d_id', 'c.display_name','d.policy_number','c.firstname','c.lastname','d.commence_date','d.due_date','c.mobile_no','e.number_plate','c.account_no','e.Engine','e.Model','e.Others');
+             $select = array('c.id','d.id as d_id', 'c.display_name','d.policy_number','d.cover_type','c.firstname','c.lastname','d.commence_date','d.due_date','c.mobile_no','e.number_plate','c.account_no','e.Engine','e.Model','e.Others');
 
             //$customers = $db->get("client_motorbike_details d");
             $customers = $db->arraybuilder()->paginate("client_insurance_details d", 1, $select);
@@ -81,7 +81,7 @@ $pdf->SetKeywords('TCPDF, PDF');
  $id = $row['d_id'];
 
  $name = strtoupper($row['display_name']);
-$policy_number= strtoupper($row['policy_number']);
+$policy_number= strtoupper($row['policy_number']."-".$row['cover_type']);
 $print_date = new DateTime($row['commence_date']);
 
 $print_date= $print_date->format("d/m/Y");
@@ -121,7 +121,7 @@ $subtable = '<tr><div style="" class="cls_008"><span class="name1 cls_008">'.$na
     
 <tr><div style="position:absolute;left:463.04px;top:129.55px" class="cls_008"><span class="cls_008">THE MONARCH INS. CO. LTD.</span></div></tr>
 <tr><div style="position:absolute;left:463.04px;top:129.55px" class="cls_008"><span class="cls_008"></span></div></tr>
-<tr><div style="position:absolute;left:20.49px;top:180.57px" class="cls_008"><span class="cls_008">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.str_pad($id, 8, '0', STR_PAD_LEFT).'</span></div></tr>
+<tr><div style="position:absolute;left:20.49px;top:180.57px" class="cls_008"><span class="cls_008">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'."INS".str_pad($id, 8, '0', STR_PAD_LEFT).'</span></div></tr>
 ';
 $subtable2 =
 '<tr><div style="" class="cls_008"><span class="name1 cls_008"></span></div></tr>
@@ -179,7 +179,7 @@ $pdf->lastPage();
 // ---------------------------------------------------------
 ob_end_clean();
 //Close and output PDF document
-$pdf->Output($name." ".$print_date.'.pdf', 'I');
+$pdf->Output($name." ".$print_date.'.pdf', 'D');
 $date=date("Y-m-d H:i:s");
 $db = getUipDbInstance();
 $data = Array (

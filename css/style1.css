@@ -1,0 +1,84 @@
+@page {
+    /* dimensions for the whole page */
+    size: A5;
+    
+    margin: 0;
+}
+
+
+body {
+    /* A5 dimensions */
+    height: 210mm;
+    width: 200mm;
+    margin: 0;
+    -webkit-print-color-adjust:exact;
+    padding:5px;
+}
+.main {height:1200px;
+width:100%;
+background:black;
+color:#fff;
+}
+.header{
+width:100%;
+height:120px;
+background:#fff;
+color:#fff;
+margin-top:50px;
+}
+.logo{
+background:#fff;
+float:left;
+width:50%;
+
+}
+.header-info{
+float:right;
+width:50%;
+color:#000;
+
+font-family:verdana;
+font-size:15px;
+
+}
+.header-info p{
+float:right;
+
+font-size:12px;
+font-family:verdana;
+}
+@media print{a[href]:after{content:none}}
+.main{
+background:#fff;
+height:225px;
+color:#000;
+}
+.main1{
+margin-left:75px;
+margin-top:-40px;
+
+}
+.invoice{margin:0 auto; background:#F2F2F2; border:2px; border-color:#CC0; }
+.invoice tr td{font-size: 14px;font-family: verdana;padding:0px;margin:0px; }
+.table2{margin:0 auto; background-color:#F2F2F2; font-family:Verdana; font-size:17px;}
+.table2 tr td{font-size:12px;border:1px solid #fff; }
+
+.table2 tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+table2 tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+input[type=text] {
+   background-color: transparent;
+    border: 0px solid;
+    height: 20px;
+    color: #000;
+    font-size:12px;
+}
+
+input.break {
+    word-wrap: break-word;
+    word-break: break-all;
+    height: 80px;
+}

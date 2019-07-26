@@ -7,7 +7,7 @@
             <option value=" " >Please select Client</option>
             <?php
             require_once './config/config.php';
-            echo $sql = "select distinct(c.id),c.display_name from m_client c inner join `client_bike_details`  m on c.id=m.client_id inner join client_insurance_details d on d.motorbike_details_id=m.id where c.status_enum='300' and c.office_id='50' and d.print_status='1' ";
+            echo $sql = "select distinct(c.id),c.display_name from m_client c inner join `client_bike_details`  m on c.id=m.client_id inner join client_insurance_details d on d.bike_id=m.id where c.status_enum='300' and c.office_id='50' and d.print_status='1' ";
             $result = mysqli_query(getDbConnection(), $sql);
 
             $db = getUipDbInstance();

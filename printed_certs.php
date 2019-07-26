@@ -20,7 +20,7 @@ if (!$page) {
 
 // If filter types are not selected we show latest created data first
 if (!$filter_col) {
-    $filter_col = "d.updated_at";
+    $filter_col = "d.id";
 }
 if (!$order_by) {
     $order_by = "Desc";
@@ -28,7 +28,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getUipDbInstance();
-$db->join("`client_bike_details` e", "e.id = d.motorbike_details_id", "LEFT");
+$db->join("`client_bike_details` e", "e.id = d.bike_id", "LEFT");
  $db->join("m_client c", "c.id = e.client_id", "LEFT");
  
             $db->where("c.status_enum", 300);
@@ -74,7 +74,7 @@ include_once 'includes/header.php';
     <div class="row">
 
         <div class="col-lg-6">
-            <h1 class="page-header">Insurance Clients</h1>
+            <h1 class="page-header">Printed Certs</h1>
         </div>
         <div class="col-lg-6" style="">
             <div class="page-action-links text-right">

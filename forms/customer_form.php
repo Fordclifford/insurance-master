@@ -7,7 +7,7 @@
             <option value="" >Please select Client</option>
             <?php
             require_once './config/config.php';
-            echo $sql = "select c.id,c.display_name from m_client c where c.status_enum='300' and c.office_id='50' and c.id not in (SELECT client_id from `client motorbike details`) ";
+            echo $sql = "select c.id,c.display_name from m_client c where c.status_enum='300' and c.office_id='50' ";
             $result = mysqli_query(getDbConnection(), $sql);
             
             if($edit){

@@ -22,6 +22,9 @@
         <!-- Custom Fonts -->
         <link href="assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <link href="css/icons.css" rel="stylesheet" type="text/css" />
+     
+	
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -95,6 +98,9 @@
                                    <li <?php echo (CURRENT_PAGE == "insurance.php" || CURRENT_PAGE == "add_insurance.php") ? 'class="active"' : ''; ?>>
                                     <a href="#"><i class="fa fa-user-circle fa-fw"></i> Insurance<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
+                                         <li>
+                                        <a href="batches.php"><i class="fa fa-lost fa-fw"></i>Batches</a>
+                                    </li>
                                         <li>
                                         <a href="add_insurance.php"><i class="fa fa-plus fa-fw"></i>Add New</a>
                                     </li>
@@ -105,6 +111,10 @@
                                             <a href="insurance.php"><i class="fa fa-list fa-fw"></i>List all</a>
                                         </li>
                                         
+                                        <li>
+                                            <a href="cancelled.php"><i class="fa fa-close fa-fw"></i>Cancelled</a>
+                                        </li>
+                                     
                                          <li>
                                             <a href="printed_certs.php"><i class="fa fa-list fa-fw"></i>Printed Certs</a>
                                         </li>
@@ -116,6 +126,9 @@
                                             <a href="new.php"><i class="fa fa-print fa-fw"></i>Ready for printing</a>
                                         </li>
                                     </ul>
+                                </li>
+                                 <li>
+                                    <a href="payments.php"><i class="fa fa-money fa-fw"></i> Monarch Payments</a>
                                 </li>
                                 <li>
                                     <a href="admin_users.php"><i class="fa fa-users fa-fw"></i> Users</a>

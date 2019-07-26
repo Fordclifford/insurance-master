@@ -19,14 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dt->modify('-1 day');
     $dt->format('Y-m-d H:i:s');
     
-      $dt1 = new DateTime($data_to_store['commence_date']);
-      $dt1->format('Y-m-d H:i:s');    
+  $dt1 = new DateTime($data_to_store['commence_date']);
+      $dt1->format('Y-m-d H:i:s');
+         $dt2 = new DateTime($data_to_store['due_date']);
+      $dt2->format('Y-m-d H:i:s');
+    $insurance['due_date'] = date_format($dt2, "d-m-Y H:i:s");
     $insurance['commence_date'] = date_format($dt1, "d-m-Y H:i:s");
-   
     
-    $insurance['due_date'] = date_format($dt, "d-m-Y H:i:s");
      $insurance['created_at'] = date('Y-m-d H:i:s');
-      $insurance['motorbike_details_id'] = $data_to_store['bike_id'];
+      $insurance['bike_id'] = $data_to_store['bike_id'];
        $insurance['period'] = $data_to_store['period'];
         $insurance['policy_number'] = $data_to_store['policy_number'];
         $insurance['renewal']="1";

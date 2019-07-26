@@ -28,7 +28,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getUipDbInstance();
- $db->join("`client_bike_details` e", "e.id = d.motorbike_details_id", "LEFT");
+ $db->join("`client_bike_details` e", "e.id = d.bike_id", "LEFT");
   $db->join("m_client c", "c.id = e.client_id", "LEFT");
            $db->where("c.status_enum", 300);
               $db->where("c.office_id", 50);
@@ -74,7 +74,7 @@ include_once 'includes/header.php';
     <div class="row">
 
         <div class="col-lg-6">
-            <h1 class="page-header">Insurance Clients</h1>
+            <h1 class="page-header">Renewals</h1>
         </div>
         <div class="col-lg-6" style="">
             <div class="page-action-links text-right">
@@ -208,7 +208,7 @@ include_once 'includes/header.php';
             echo '<ul class="pagination text-center">';
             for ($i = 1; $i <= $total_pages; $i++) {
                 ($page == $i) ? $li_class = ' class="active"' : $li_class = "";
-                echo '<li' . $li_class . '><a href="printed_certs.php' . $http_query . '&page=' . $i . '">' . $i . '</a></li>';
+                echo '<li' . $li_class . '><a href="renewals.php' . $http_query . '&page=' . $i . '">' . $i . '</a></li>';
             }
             echo '</ul></div>';
         }

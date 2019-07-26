@@ -84,7 +84,7 @@ include_once 'includes/header.php';
     <div class="row">
 
         <div class="col-lg-6">
-            <h1 class="page-header">Client Motorbike Details</h1>
+            <h1 class="page-header">Insurance Clients Details</h1>
         </div>
         <div class="col-lg-6" style="">
             <div class="page-action-links text-right">
@@ -161,7 +161,7 @@ include_once 'includes/header.php';
 	                <td><?php echo htmlspecialchars($row['Engine']) ?></td>
 	                <td><?php echo htmlspecialchars($row['Model']) ?> </td>
                         <td><?php echo htmlspecialchars($row['Others']) ?></td>
-	                <<td>
+	                <td>
                             		<a href="edit_customer.php?client_id=<?php echo $row['id'] ?>&operation=edit" class="btn btn-primary" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span>
 
 	</td>
